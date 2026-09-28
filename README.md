@@ -1,5 +1,7 @@
 # Mapeo de humedales del Altiplano boliviano con Google Earth Engine
 
+**Autor:** Gonzalo López Romero · Escuela Militar de Ingeniería
+
 Scripts de **Google Earth Engine (GEE)** para mapear humedales en la cuenca del Altiplano boliviano combinando imágenes ópticas (Landsat + Sentinel-2) y de radar (Sentinel-1). Nacieron de un Trabajo de Grado sobre cartografía de humedales y están pensados para adaptarse a otras cuencas.
 
 ## ¿Qué hace este proyecto?
@@ -18,6 +20,18 @@ Scripts de **Google Earth Engine (GEE)** para mapear humedales en la cuenca del 
 | 02 | `02_mosaicos_opticos_hls.js` | Mosaico mensual óptico con índices (NDVI, NDWI, etc.) | `mediana_<mes>_<año>` |
 | 04 | `04_clasificacion_anual_temporal.js` | Clasificación de todo el año (12 meses juntos) | 6 mapas |
 | 05 | `05_clasificacion_mensual.js` | Clasificación de un solo mes | 9 mapas |
+
+## Los scripts, explicados brevemente
+
+**03 · Mapa de coincidencia.** Hay varios mapas globales que dicen dónde hay agua y humedales, pero no siempre coinciden. Este script los pone juntos y cuenta, para cada punto del terreno, cuántos de los 8 mapas marcan humedal. Donde coinciden casi todos, se considera humedal seguro; donde hay dudas, se descarta. El resultado sirve como "respuesta de ejemplo" para enseñar a los clasificadores.
+
+**01 · Mosaicos de radar.** Toma las imágenes de radar de Sentinel-1 de un mes y las convierte en una sola imagen limpia: corrige el efecto de las montañas, reduce el ruido y compensa las diferencias de ángulo. El radar atraviesa las nubes, por lo que aporta información donde las imágenes ópticas fallan.
+
+**02 · Mosaicos ópticos.** Toma las imágenes de Landsat y Sentinel-2 de un mes, quita nubes y sombras, y las resume en una sola imagen. Además calcula índices que resaltan la vegetación (NDVI) y el agua (NDWI), entre otros.
+
+**04 · Clasificación anual.** Usa los 12 meses a la vez para decidir si cada píxel es humedal o no. Mirar todo el año ayuda a distinguir un humedal, que cambia con las estaciones, de un suelo seco. Genera 6 mapas y calcula qué tan acertados son.
+
+**05 · Clasificación mensual.** Hace lo mismo, pero para un solo mes. Sirve para ver cómo cambian los humedales durante el año. Genera 9 mapas y calcula qué tan acertados son.
 
 ## Orden recomendado
 
@@ -96,7 +110,7 @@ Algunos están en el catálogo comunitario (`projects/sat-io/...`). Consulta la 
 
 Si usas estos scripts, cita el repositorio y el trabajo asociado:
 
-> TU NOMBRE (AÑO). *Mapeo de humedales del Altiplano boliviano con Google Earth Engine.* Trabajo de Grado, TU UNIVERSIDAD. Repositorio: URL_DEL_REPOSITORIO
+> López Romero, G. (2026). *Mapeo de humedales del Altiplano boliviano con Google Earth Engine.* Trabajo de Grado, Escuela Militar de Ingeniería. Repositorio: https://github.com/GouniseLr/Humedales_Altiplano
 
 ## Licencia
 
